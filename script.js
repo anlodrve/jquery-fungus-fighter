@@ -8,7 +8,8 @@ $(document).ready(onReady);
 
 let fungusHP = 100;
 let attackPoints=100; 
-let fungusStatus;
+let fungusStatus = 'walk';
+let disabled = false
 
 function onReady() {
     $('.attack-btn').on('click', attack);
@@ -45,12 +46,13 @@ function attack(){
     if(attackPoints<=0){
         attackPoints = 0;
         fungusStatus = 'jump';
-
-        }
-    if(fungusHP<= 0){
+        disabled = true
+    }
+    
+ if(fungusHP<= 0){
         fungusHP = 0
-        fungusStatus = 'dead'
-                }
+        fungusStatus = 'dead';
+     }
 
     render() 
 
@@ -58,10 +60,15 @@ function attack(){
 
 function render () {
 console.log('in render');
+    //change 
     $('.hp-text').text(fungusHP);
     $('.ap-text').text(attackPoints);
 
-    $('.freaky-fungus').attr('class', fungusStatus);
+    //change the fungus animation 
+    $(".freaky-fungus").attr("class", `freaky-fungus ${fungusStatus}`);
+   
+    //change the disabled boolean 
+    $(".attack-btn").disabled
 }
 
 
