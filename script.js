@@ -13,6 +13,8 @@ let disabled = false;
 
 function onReady() {
     $('.attack-btn').on('click', attack);
+
+    setInterval(regenerate, 1000);
 }
 
 function attack(){
@@ -49,7 +51,7 @@ function attack(){
         disabled = true
     }
     
- if(fungusHP<= 0){
+    if(fungusHP <= 0){
         fungusHP = 0
         fungusStatus = 'dead';
      }
@@ -58,17 +60,28 @@ function attack(){
 
 }
 
+function regenerate(){
+    if(fungusHP < 50 && fungusHP > 0){
+        fungusHP++
+    }
+    render();
+}
+
 function render () {
 console.log('in render');
-    //change 
+    //change the points
     $('.hp-text').text(fungusHP);
     $('.ap-text').text(attackPoints);
 
     //change the fungus animation 
     $(".freaky-fungus").attr("class", `freaky-fungus ${fungusStatus}`);
-   console.log('disabled?', disabled);
+
     //change the disabled boolean 
     $(".attack-btn").attr("disabled", disabled);
+
+    //change the meter
+    $('#hp-meter').val(fungusHP);
+    $('#ap-meter').val(attackPoints);
 }
 
 
